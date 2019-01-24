@@ -2,9 +2,10 @@ import pprint, datetime
 import praw
 
 def main():
+    #You need to sign up to use reddit's API before using this!
     reddit = praw.Reddit(client_id='Your client id.',
                      client_secret='Your client secret.',
-                     user_agent='reddit by /u/crazed 404, https://github.com/Fitzy1293/reddit')               
+                     user_agent='reddit by /u/Your username, https://github.com/Fitzy1293/reddit')               
     
     user = input('Enter a username:\n')
     user = reddit.redditor(user)
