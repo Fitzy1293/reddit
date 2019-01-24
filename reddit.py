@@ -4,7 +4,7 @@ import praw
 def main():
     reddit = praw.Reddit(client_id='Your client id.',
                      client_secret='Your client secret.',
-                     user_agent='Extraction Analysis by /u/crazed 404, https://github.com/Fitzy1293/reddit')               
+                     user_agent='reddit by /u/crazed 404, https://github.com/Fitzy1293/reddit')               
     
     user = input('Enter a username:\n')
     user = reddit.redditor(user)
