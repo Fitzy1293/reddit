@@ -1,14 +1,13 @@
-import pprint, datetime
+import pprint, datetime, os
 import praw
 
 def main():
-    #You need to sign up to use reddit's API before using this!
-    reddit = praw.Reddit(client_id='Your client id.',
-                     client_secret='Your client secret.',
-                     user_agent='reddit by /u/Your username, https://github.com/Fitzy1293/reddit')               
+    reddit = praw.Reddit(client_id='Your client id',
+                     client_secret='Your client secret',
+                     user_agent='reddit /u/your username, https://github.com/Fitzy1293/reddit')               
     
-    user = input('Enter a username:\n')
-    user = reddit.redditor(user)
+    userstr = input('Enter a username:\n')
+    user = reddit.redditor(userstr)
 
     print('Comments:')
     for commentCount in userCommentCount(user):
@@ -20,32 +19,23 @@ def main():
     for submissionCount in userSubmissionCount(user):
         print('r/' + submissionCount[0] + ': ' + str(submissionCount[1]) + ' submission(s). ')
 
-    userSubreddit = input('\nEnter a subreddit to see all of ' + str(user) + '\'s posts in that subreddit. \nr/')
-    userSubreddit = reddit.subreddit(userSubreddit)
+    userSubredditstr = input('\nEnter a subreddit to see all of ' + str(user) + '\'s posts in that subreddit. \nr/')
+    userSubreddit = reddit.subreddit(userSubredditstr)
 
-    if subredditComments(user, userSubreddit) is None:
-        print('No comments in ' + str(userSubreddit) + '.')
+    comments = subredditComments(user, userSubreddit)
+    submissions = subredditSubmissions(user, userSubreddit)
 
-    else:
-        print('Comments:')
-        for i, comment in enumerate(subredditComments(user, userSubreddit)):
-            print('Comment ' + str(i+1) + ': ' + comment[0])
+    print('Enter a filename to export and automatically open a .txt file of '
+          + userstr + '\'s posts to ' + userSubredditstr + '.' )
+    print('Or enter "exit" to exit.')
+    filename = input() 
 
-            print(comment[1])
-            print()
-            print(comment[2])
-            print()
-        
-    print('=' * 134)
-
-    if subredditSubmissions(user, userSubreddit) is None:
-        print('No submissions to ' + str(userSubreddit) + '.')
-    else:
-        print('Submissions:')
-        for i, submission in enumerate(subredditSubmissions(user, userSubreddit)):
-            print('Submission ' + str(i+1) + ': ' + submission[0])
-            print(submission[1])
-            print()
+    if filename.lower() != 'exit':
+        filename = filename + '.txt'
+        txtExport(filename, userstr, comments, submissions)
+        exportPath = os.path.abspath(filename)
+        print(exportPath)
+        os.startfile(exportPath, 'open')
             
     
 def userCommentCount(user):
@@ -119,6 +109,23 @@ def subredditSubmissions(user, userSubreddit):
         return None
     else:
         return submissions
+
+def txtExport(filename, user, comments, submissions):
+    txt = open(filename + '.','w', encoding = 'utf8')
+    
+    txt.write('Comments - \n\n')
+    for i, comment in enumerate(comments):
+        txt.write('Comment ' + str(i+1) + ': ' + comment[0] + '\n')
+        txt.write(comment[1] + '\n\n')
+        txt.write(comment[2] + '\n\n')
+
+    txt.write('Submissions - \n\n')
+    for i, submission in enumerate(submissions):
+        txt.write('Submission ' + str(i+1) + ': ' + submission[0] + '\n')
+        txt.write(submission[1] + '\n\n')
+    
+    txt.close()
+    return txt
 
 main()
 
