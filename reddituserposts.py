@@ -89,7 +89,7 @@ def subredditComments(user, userSubreddit):
     comments.reverse() #Makes it from earliest to latest date. 
 
     if len(comments) == 0:
-        return None
+        return 'No comments.'
     else:
         return comments
 
@@ -106,7 +106,7 @@ def subredditSubmissions(user, userSubreddit):
     submissions.reverse()
          
     if len(submissions) == 0:
-        return None
+        return 'No submissions.'
     else:
         return submissions
 
