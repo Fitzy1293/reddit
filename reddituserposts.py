@@ -6,7 +6,7 @@ def main():
                      client_secret='Your client secret',
                      user_agent='reddit /u/your username, https://github.com/Fitzy1293/reddit')               
     
-    userstr = input('Enter a username:\n')
+        userstr = input('Enter a username:\n')
     user = reddit.redditor(userstr)
 
     print('Comments:')
@@ -36,8 +36,7 @@ def main():
         exportPath = os.path.abspath(filename)
         print(exportPath)
         os.startfile(exportPath, 'open')
-            
-    
+        
 def userCommentCount(user):
     userComments = []
     for comment in user.comments.new(limit=None):
@@ -88,10 +87,7 @@ def subredditComments(user, userSubreddit):
     
     comments.reverse() #Makes it from earliest to latest date. 
 
-    if len(comments) == 0:
-        return 'No comments.'
-    else:
-        return comments
+    return comments
 
 def subredditSubmissions(user, userSubreddit):
     submissions = []
@@ -104,20 +100,18 @@ def subredditSubmissions(user, userSubreddit):
             submissions.append(submissionInfo)
 
     submissions.reverse()
-         
-    if len(submissions) == 0:
-        return 'No submissions.'
-    else:
-        return submissions
+    
+    return submissions
 
 def txtExport(filename, user, comments, submissions):
     txt = open(filename + '.','w', encoding = 'utf8')
-    
+
     txt.write('Comments - \n\n')
     for i, comment in enumerate(comments):
         txt.write('Comment ' + str(i+1) + ': ' + comment[0] + '\n')
         txt.write(comment[1] + '\n\n')
         txt.write(comment[2] + '\n\n')
+
 
     txt.write('Submissions - \n\n')
     for i, submission in enumerate(submissions):
