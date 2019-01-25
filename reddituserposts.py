@@ -82,6 +82,7 @@ def subredditComments(user, userSubreddit):
             comment = comment.rstrip('\"')
             comment = comment.rstrip('\'')
             comment = '\n\n'.join(comment.split('\\n\\n'))
+            comment = '\''.join(comment.split('\\\''))
             commentInfo = (postDate, link, comment)
             comments.append(commentInfo)
     
