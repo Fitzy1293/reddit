@@ -1,12 +1,6 @@
 import pprint, os
 import praw
 
-def main():
-    reddit = praw.Reddit(client_id='Your client ID',
-                     client_secret='Your client secret',
-                     user_agent=' /u/Your username, https://github.com/Fitzy1293/reddituserkeyword')               
-    
-     
     userstr = input('Enter a username:\n')
     user = reddit.redditor(userstr)
     
@@ -16,7 +10,7 @@ def main():
 
     for comment in comments:
         for word in comment[1]:
-            if keyword.lower() + 's' == word.lower() + 's':
+            if keyword.lower() == word.lower() or keyword.lower() + 's' == word.lower() + 's' :
                 print(comment[0])
                 print(' '.join(comment[1]))
                 print()
