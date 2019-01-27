@@ -27,6 +27,7 @@ def userComments(user):
         comment = comment.rstrip('\'')
         comment = comment.rstrip('\n"')
         comment = '\n\n'.join(comment.split('\\n\\n'))
+        comment = '\n'.join(comment.split('\\n'))
         comment = '\''.join(comment.split('\\\''))
         comment = comment.split(' ')
 
