@@ -1,6 +1,7 @@
 import pprint, os
 import praw
 
+def main():
     userstr = input('Enter a username:\n')
     user = reddit.redditor(userstr)
     
