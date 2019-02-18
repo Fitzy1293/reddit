@@ -6,7 +6,7 @@ def main():
                      client_secret='Your client secret',
                      user_agent='reddit /u/your username, https://github.com/Fitzy1293/reddituserposts')               
     
-        userstr = input('Enter a username:\n')
+    userstr = input('Enter a username:\n')
     user = reddit.redditor(userstr)
 
     print('Comments:')
