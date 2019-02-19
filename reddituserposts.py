@@ -1,3 +1,7 @@
+#The purpose of this program is to get a list of every subreddit a user has posted in, and how often.
+#From this list, you can pick a subreddit to get all of their comments and posts from.
+#The output is a text file and a histogram of all of their posts for each subreddit. 
+
 import praw
 import pprint, collections, os, sys
 from datetime import datetime
