@@ -115,7 +115,7 @@ def formatTimes(validDict): #Should take what submissionsInRange returns as its 
 
         value[1] = ' '.join(value[1])
     
-    return permalinkAttributes
+    return validDict
 
 while True:
     try:
