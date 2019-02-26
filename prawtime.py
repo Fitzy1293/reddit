@@ -1,6 +1,5 @@
 import praw
 import time
-import datetime
 from datetime import datetime, timedelta
 
 #reddit = praw.Reddit('Your authentification info.')
