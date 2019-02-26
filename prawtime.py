@@ -63,8 +63,6 @@ def submissionTimedelta(subreddit):
             daysHoursMinutes.append(int(daysHours[1]))
             daysHoursMinutes.append(int(submissionDelta[-1]))
 
-            
-            
         else:
             
             daysHoursMinutes.append(0) #Adding 0 days to match the length of the other case. 
