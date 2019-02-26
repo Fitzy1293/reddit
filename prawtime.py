@@ -29,8 +29,8 @@ def submissionsWithin24hours(subreddit):
         
         title = submission.title
         link = 'www.reddit.com' + submission.permalink
-        #if 'day' not in str(submissionDelta):
-        submissionsLast24.append((title, link, submissionDelta))
+        if 'day' not in str(submissionDelta):
+            submissionsLast24.append((title, link, submissionDelta))
   
     return submissionsLast24
 
