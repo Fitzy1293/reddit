@@ -56,10 +56,10 @@ def createCombinedCsvFiles(directory, submissionComments):
     spreadsheet = open(path + '.', 'w', encoding = 'UTF-8-sig', newline = '')
 
     with spreadsheet:
+        writer = csv.writer(spreadsheet)
         writer.writerow(['Author', 'Comment', 'Score', 'ID'])
-        
+
         for submission in submissionComments:
-            writer = csv.writer(spreadsheet)
             writer.writerows(submission[1][1])
 
 while True:
