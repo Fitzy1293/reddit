@@ -21,21 +21,19 @@ def main():
     createCombinedCsvFiles(directory, submissionComments)
     
 def getComments(subreddit, limit):    
-    subredditRange = subreddit.hot(limit = limit)
-
-    for submission in subredditRange: #Bypassing the stickies and changing user's limit +1 for each sticky
+    for submission in subreddit.hot(limit=5): #Bypassing the stickies and changing user's limit +1 for each sticky
         if submission.stickied:
             limit = limit+1
 
     subredditRange = subreddit.hot(limit = limit)
     postComments = []
     for submission in subredditRange:
-
         if not submission.stickied:
-            authorInfo = [] 
 
+            authorInfo = [] 
             submission.comments.replace_more(limit=None) #Reaches all comments. 
             comments = submission.comments.list()
+
             for comment in comments:
                 authorInfo.append([comment.author, #Most useful fields. 
                                comment.body,
@@ -43,8 +41,9 @@ def getComments(subreddit, limit):
                                comment.id]) 
             
             postComments.append((subreddit, [submission.id, authorInfo]))
-        
+    
     return postComments
+
 
 #Creates separate .csv files for each post. Each row is a comment in the thread.
 def createCsvFiles(directory, submissionComments):
