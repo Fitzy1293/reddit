@@ -19,7 +19,6 @@ def main():
     
     print('\n' + str(len(submissionComments)) + ' .csv file(s) were created in ' + directory)
     createCombinedCsvFiles(directory, submissionComments)
-        
     
 def getComments(subreddit, limit):    
     subredditRange = subreddit.hot(limit = limit)
@@ -43,14 +42,12 @@ def getComments(subreddit, limit):
 #Creates separate .csv files for each post. Each row is a comment in the thread.
 def createCsvFiles(directory, submissionComments):
     for submission in submissionComments:
-        
         path = os.path.join(directory,  submission[1][0] + '.csv') #Path for nw .csv.
         spreadsheet = open(path + '.', 'w', encoding = 'UTF-8-sig', newline = '')
 
         with spreadsheet:
             writer = csv.writer(spreadsheet)
             writer.writerow(['Author', 'Comment', 'Score', 'ID'])
-
             writer.writerows(submission[1][1])
 
 #Creates a .csv of every comment. 
@@ -59,10 +56,10 @@ def createCombinedCsvFiles(directory, submissionComments):
     spreadsheet = open(path + '.', 'w', encoding = 'UTF-8-sig', newline = '')
 
     with spreadsheet:
+        writer.writerow(['Author', 'Comment', 'Score', 'ID'])
+        
         for submission in submissionComments:
             writer = csv.writer(spreadsheet)
-            writer.writerow(['Author', 'Comment', 'Score', 'ID'])
-
             writer.writerows(submission[1][1])
 
 while True:
