@@ -23,19 +23,26 @@ def main():
 def getComments(subreddit, limit):    
     subredditRange = subreddit.hot(limit = limit)
 
+    for submission in subredditRange: #Bypassing the stickies and changing user's limit +1 for each sticky
+        if submission.stickied:
+            limit = limit+1
+
+    subredditRange = subreddit.hot(limit = limit)
     postComments = []
     for submission in subredditRange:
-        
-        authorInfo = [] 
-        submission.comments.replace_more(limit=None) #Reaches all comments. 
-        comments = submission.comments.list()
-        for comment in comments:
-            authorInfo.append([comment.author, #Most useful fields. 
+
+        if not submission.stickied:
+            authorInfo = [] 
+
+            submission.comments.replace_more(limit=None) #Reaches all comments. 
+            comments = submission.comments.list()
+            for comment in comments:
+                authorInfo.append([comment.author, #Most useful fields. 
                                comment.body,
                                comment.score,
                                comment.id]) 
             
-        postComments.append((subreddit, [submission.id, authorInfo]))
+            postComments.append((subreddit, [submission.id, authorInfo]))
         
     return postComments
 
