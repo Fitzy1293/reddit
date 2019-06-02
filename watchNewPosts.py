@@ -4,7 +4,6 @@ import time
 reddit = authenticate() #Authentication info in another .py.
 
 def printNew(subreddit):
-    
     subreddit = reddit.subreddit(subreddit)
 
     oldIDs = [submission.id for submission in subreddit.new(limit=5)] #Initialize the first list of posts, to not compare               
