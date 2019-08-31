@@ -4,7 +4,7 @@ from authenticate import authenticate
 from pprint import pprint
 import os
 
-reddit = authenticate()
+reddit = authenticate() 
 directory = 'C:\\Users\\Owen\\Documents\\Python Scripts\\reddit'
 
 subreddits = open(os.path.join(directory,'topsubs.txt'), 'r').read().splitlines()
