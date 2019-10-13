@@ -5,7 +5,7 @@ from multiprocessing import Pool
 
 #createList(chunk) does pretty much everything.
 #I didn't want it to be this long.
-#Because you have to run this asynchronous with multiple processes or it'll take 6 hours, it's difficult to separate into smaller functions.
+#Because you have to run this asynchronous with multiple processes or it'll take 6 hours, it's difficult to separate.
 #Takes ~1 hour 40 minutes to successfully do every subreddit. 
 def createList(chunk):
     temp = [] 
