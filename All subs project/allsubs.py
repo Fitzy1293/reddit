@@ -83,16 +83,13 @@ def main():
 
     files.sort(key=lambda x:int(x[0]))
     files = ['_'.join(file) for file in files]
-  
-    
-    
+
     with open('subs.txt', 'w+') as new:
         new.write('Rank' + '\t' + 'Subreddit Name' + '\t' + 'Subscriber count\n')
         for file in files:
             rows = open(file, 'r').read().splitlines() 
             for row in rows:
                 new.write(row + '\n')
-            
 
     subsTxtPath = os.path.join(os.getcwd(),'subs.txt')
     
@@ -107,4 +104,3 @@ if __name__ == '__main__':
     main()
     end = (time.time())
     print(f'Run time: {end-start} seconds')
-    
