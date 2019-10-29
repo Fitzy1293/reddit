@@ -2,7 +2,6 @@ import os,urllib.request, json, time
 from pprint import pprint
 from datetime import datetime
 
-
 def getIDs(userRangeSeconds, subreddit):
     beforeUTC = int(round(time.time())) 
     userRange = int(round(beforeUTC - userRangeSeconds))
@@ -83,11 +82,20 @@ def main():
 
     userRangeSeconds =  years*365*86400 + weeks*7*86400 + days*3600*24 + hours*3600 + minutes*60
     
-    print('\nGathering posts.')
-    
+    print('\nGathering posts.\n')
+
+    start = time.time()
     validDict = getIDs(userRangeSeconds, subreddit)
-    
     writeFiles(validDict, subreddit)
+    end = time.time()
+
+    print(f'{end-start} seconds to run.')
         
 main()
             
+
+
+
+
+
+
