@@ -106,17 +106,23 @@ def main():
     
     for user in users:
         start = time.time()
-        print(f'\nGathering comments by {user}.\n')
-        comments = getComments(user)
-        print('\nGathering submissions by {user}.')
-        submissions = getSubmissions(user)
+        try:
+            print(f'\nGathering comments by {user}.\n')
+            comments = getComments(user)
+            print(f'\nGathering submissions by {user}.')
+            submissions = getSubmissions(user)
 
-        postDic = submissions + comments
-        
-        writeFiles(postDic, user)
-        end = time.time()
+            postDic = submissions + comments
+            
+            writeFiles(postDic, user)
+            end = time.time()
+        except Exception as e:
+            print(e + '\n')
+            continue
 
         print(f'\n{end-start} seconds to run.')
         
 main()
-           
+            
+
+
