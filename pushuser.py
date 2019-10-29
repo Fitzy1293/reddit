@@ -24,7 +24,7 @@ def getComments(user):
                             
             
             if 'permalink' in i.keys():
-                commentDict['link'] = f'https://www.reddit.com + i["permalink"]'
+                commentDict['link'] = 'https://www.reddit.com' + i['permalink']
             
             onekIDs.append(commentDict)
     
@@ -104,7 +104,7 @@ def writeFiles(postDict, user):
 def main():
     user = input('Enter a user >> ')
     start = time.time()
-    print('Gathering comments.\n')
+    print('\nGathering comments.\n')
     comments = getComments(user)
     print('\nGathering submissions.')
     submissions = getSubmissions(user)
