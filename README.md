@@ -2,18 +2,18 @@
 Random programs for reddit
 
 The programs
+
 Keep in my mind that everything but the All subs project gets as much as the reddit API allows. 
-All subs project is a way to get a daily list of all subreddits and their subscriber count. 
-getusers.py uses a list of subreddits to get an unordered list of users. users.txt is the result I got when I ran it. Useful if you need random reddit usernames to analyze. topsubs.txt is the top 100 subreddits as of when it was uploaded. 
-prawtime.py gets posts going back to a specified day, hour, minute range. Kind of a strange program.
-reddituserkeyword.py was for someone who asked for a way to see if a redditor has mentioned a specified word. Whipped up very quickly. 
-reddituserposts.py gives you the subreddits a user posted and commented in, then allows you to pick one of those subreddits, and look at their posts and comments. I like this one the most. 
-submissionComments.py creates a .CSV of comments from a specified number of current posts in a subreddit. 
-
-
-
-
+  - All subs project is a way to get a daily list of all subreddits and their subscriber count. 
+  - getusers.py uses a list of subreddits to get an unordered list of users. users.txt is the result I got when I ran it. Useful if you     need random reddit usernames to analyze. topsubs.txt is the top 100 subreddits as of when it was uploaded. 
+  - prawtime.py gets posts going back to a specified day, hour, minute range. Kind of a strange program.
+  - reddituserkeyword.py was for someone who asked for a way to see if a redditor has mentioned a specified word. Whipped up very           quickly. 
+  - reddituserposts.py gives you the subreddits a user posted and commented in, then allows you to pick one of those subreddits, and         look at their posts and comments. I like this one the most. 
+  - submissionComments.py creates a .CSV of comments from a specified number of current posts in a subreddit. 
+  
+  
 Background on why this exists
+
 So what is this repository? 
 It’s really just a jumbled mess of programs I’ve worked on for reddit.
 
@@ -40,6 +40,7 @@ I feel that the irrelevance of most intro. to programming projects leads many pe
 
 
 Problems
+
 PRAW limits you to a thousand posts in a response, and I've been too lazy to learn how to use pushshift so there's that.
 
 If you notice an issue or have a question please post it in issues. 
