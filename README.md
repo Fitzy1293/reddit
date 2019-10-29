@@ -1,5 +1,5 @@
-# reddit
-Random programs for reddit
+# https://github.com/Fitzy1293/reddit
+## Random programs for reddit
 
 **The programs**
 
