@@ -5,6 +5,7 @@ Random programs for reddit
 
 Keep in my mind that everything but the All subs project gets as much as the reddit API allows. 
   - All subs project is a way to get a daily list of all subreddits and their subscriber count. 
+  - All subs "DATE".zip contains a .txt with an ordered list of all subreddits with subscriber count as of that date.
   - getusers.py uses a list of subreddits to get an unordered list of users. users.txt is the result I got when I ran it. Useful if you     need random reddit usernames to analyze. topsubs.txt is the top 100 subreddits as of when it was uploaded. 
   - prawtime.py gets posts going back to a specified day, hour, minute range. Kind of a strange program.
   - reddituserkeyword.py was for someone who asked for a way to see if a redditor has mentioned a specified word. Whipped up very           quickly. 
