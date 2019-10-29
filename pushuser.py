@@ -39,9 +39,10 @@ def getComments(user):
         newBefore = onekIDs[-1]['utc']
         url = f'https://api.pushshift.io/reddit/search/comment/?author={author}&size=1000&before={newBefore}'
         ct = ct+1
-        
+
     postDict = [ID for IDSet in IDs for ID in IDSet]
     postDict.reverse()    
+    
     return postDict
 
 def getSubmissions(user):
@@ -69,6 +70,7 @@ def getSubmissions(user):
                 submissionDict['subreddit'] = i['subreddit']
 
             onekIDs.append(submissionDict)
+    
         IDs.append(onekIDs)
 
         if len(onekIDs)==0:
@@ -108,16 +110,17 @@ def main():
         try:
             print('\nGathering comments by ' + user + '.\n')
             comments = getComments(user)
+            
             print('\nGathering submissions by '+ user + '\n.')
             submissions = getSubmissions(user)
 
             postDic = submissions + comments
-            
+      
             writeFiles(postDic, user)
             end = time.time()
             print(f'\n{end-start} seconds to run.')
-        except Exception as e:
-            print(e + '\n')
+
+        except:
             continue
         
 main()
