@@ -34,8 +34,6 @@ def getIDs(userRangeSeconds, subreddit):
 
         IDs.append(onekIDs)
 
-        
-        
         print(url)
         print(f'Post list #{ct+1}, containing info on {len(onekIDs)} posts is complete.')
         print(f'{onekIDs[-1]["date"]} is where it is at.')
@@ -48,7 +46,6 @@ def getIDs(userRangeSeconds, subreddit):
             newBefore = onekIDs[-1]['utc']
             url = f'https://api.pushshift.io/reddit/search/submission?subreddit={subreddit}&before={newBefore}&size={1000}'
             ct = ct+1
-
 
     postDict = [ID for IDSet in IDs for ID in IDSet]
     postDict.reverse()    
@@ -72,7 +69,6 @@ def writeFiles(postDict, subreddit):
         print(f'{len(postDict)} IDs retrieved.')
 
         os.startfile(jname)
-
 
 def main():
     subreddit = input('Enter a subreddit >> ')
