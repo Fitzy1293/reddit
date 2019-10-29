@@ -65,7 +65,7 @@ def getSubmissions(user):
                                'date': str(datetime.utcfromtimestamp(i['created_utc']))})
             
             if 'permalink' in i.keys():
-                submissionDict['link'] = f'https://www.reddit.com + i["permalink"]' 
+                submissionDict['link'] = 'https://www.reddit.com' + i['permalink']
 
             onekIDs.append(submissionDict)
     
