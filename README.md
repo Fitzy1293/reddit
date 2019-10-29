@@ -1,7 +1,7 @@
 # reddit
 Random programs for reddit
 
-The programs
+**The programs**
 
 Keep in my mind that everything but the All subs project gets as much as the reddit API allows. 
   - All subs project is a way to get a daily list of all subreddits and their subscriber count. 
@@ -12,7 +12,7 @@ Keep in my mind that everything but the All subs project gets as much as the red
   - submissionComments.py creates a .CSV of comments from a specified number of current posts in a subreddit. 
   
   
-Background on why this exists
+**Background on why this exists**
 
 So what is this repository? 
 It’s really just a jumbled mess of programs I’ve worked on for reddit.
@@ -39,7 +39,7 @@ Because programming is so hands on, finding projects that feel important to you 
 I feel that the irrelevance of most intro. to programming projects leads many people to label programming as boring.
 
 
-Problems
+**Problems**
 
 PRAW limits you to a thousand posts in a response, and I've been too lazy to learn how to use pushshift so there's that.
 
