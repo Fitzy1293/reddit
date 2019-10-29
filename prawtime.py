@@ -3,9 +3,10 @@
 
 import praw
 import copy
+from authenticate import authenticate
 from datetime import datetime, timedelta
 
-#reddit = praw.Reddit('Your authentification info.')
+reddit = authenticate()
 
 def main():
     subreddit = input('Enter a subreddit >> ')
@@ -14,7 +15,7 @@ def main():
           + 'r/' + subreddit + ' going back 2 days, 6 hours, 0 minutes.')
     print('Enter 0\'s if you don\'t have to be that specific.')
 
-    days = input('Enter the number of days in your range  >> ')
+    days = input('\nEnter the number of days in your range  >> ')
     hours = input('Enter the number of hours in your range  >> ')
     minutes = input('Enter the number of minutes in your range  >> ')
     userRange = [int(days), int(hours), int(minutes)]
@@ -122,4 +123,3 @@ while True:
     except:
         print('\nSomething went wrong.\n')
         continue
-
