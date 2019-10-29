@@ -39,10 +39,9 @@ def getComments(user):
         newBefore = onekIDs[-1]['utc']
         url = f'https://api.pushshift.io/reddit/search/comment/?author={author}&size=1000&before={newBefore}'
         ct = ct+1
-
+        
     postDict = [ID for IDSet in IDs for ID in IDSet]
     postDict.reverse()    
-    
     return postDict
 
 def getSubmissions(user):
@@ -60,15 +59,16 @@ def getSubmissions(user):
         for i in data:
             submissionDict = ({'ID': i['id'],
                                'type': 'submission',
-                               'subreddit': i['subreddit'],
+                               
                                'utc': i['created_utc'],
                                'date': str(datetime.utcfromtimestamp(i['created_utc']))})
             
             if 'permalink' in i.keys():
                 submissionDict['link'] = 'https://www.reddit.com' + i['permalink']
+            if 'subreddit' in i.keys():
+                submissionDict['subreddit'] = i['subreddit']
 
             onekIDs.append(submissionDict)
-    
         IDs.append(onekIDs)
 
         if len(onekIDs)==0:
@@ -98,29 +98,27 @@ def writeFiles(postDict, user):
 
         print(f'{len(postDict)} IDs retrieved.')
 
-
 def main():
     users = input('Enter the path of a line separated .txt containing reddit usernames >> ')
-    #users = open('random users.txt', 'r').read().splitlines()
     users = open(users, 'r').read().splitlines()
+    #users = open('random users.txt', 'r').read().splitlines()
     
     for user in users:
         start = time.time()
         try:
-            print(f'\nGathering comments by {user}.\n')
+            print('\nGathering comments by ' + user + '.\n')
             comments = getComments(user)
-            print(f'\nGathering submissions by {user}.')
+            print('\nGathering submissions by '+ user + '\n.')
             submissions = getSubmissions(user)
 
             postDic = submissions + comments
             
             writeFiles(postDic, user)
             end = time.time()
+            print(f'\n{end-start} seconds to run.')
         except Exception as e:
             print(e + '\n')
             continue
-
-        print(f'\n{end-start} seconds to run.')
         
 main()
             
