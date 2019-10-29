@@ -98,26 +98,25 @@ def writeFiles(postDict, user):
 
         print(f'{len(postDict)} IDs retrieved.')
 
-        os.startfile(jname)
-
 
 def main():
-    user = input('Enter a user >> ')
-    start = time.time()
-    print('\nGathering comments.\n')
-    comments = getComments(user)
-    print('\nGathering submissions.')
-    submissions = getSubmissions(user)
-
-    postDic = submissions + comments
+    users = input('Enter the path of a line separated .txt containing reddit usernames >> ')
+    #users = open('random users.txt', 'r').read().splitlines()
+    users = open(users, 'r').read().splitlines()
     
-    
-    writeFiles(postDic, user)
-    end = time.time()
+    for user in users:
+        start = time.time()
+        print(f'\nGathering comments by {user}.\n')
+        comments = getComments(user)
+        print('\nGathering submissions by {user}.')
+        submissions = getSubmissions(user)
 
-    print(f'\n{end-start} seconds to run.')
+        postDic = submissions + comments
+        
+        writeFiles(postDic, user)
+        end = time.time()
+
+        print(f'\n{end-start} seconds to run.')
         
 main()
-            
-
-
+           
