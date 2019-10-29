@@ -1,5 +1,4 @@
 import os,urllib.request, json, time
-from authenticate import authenticate
 from pprint import pprint
 from datetime import datetime
 
@@ -80,26 +79,19 @@ def main():
     
     print('\nNow enter a time range.')
     
-    weeks = int(input('\nWeeks  >> '))
+    years = int(input('\nYears  >> '))
+    weeks = int(input('Weeks  >> '))
     days = int(input('Days  >> '))
     hours = int(input('Hours  >> '))
     minutes = int(input('Minutes  >> '))
 
-    userRangeSeconds =  weeks*7*86400 + days*3600*24 + hours*3600 + minutes*60
+    userRangeSeconds =  years*365*86400 + weeks*7*86400 + days*3600*24 + hours*3600 + minutes*60
     
     print('\nGathering posts.')
     
-    validDict = push.getIDs(userRangeSeconds, subreddit)
+    validDict = getIDs(userRangeSeconds, subreddit)
     
-    push.writeFiles(validDict, subreddit)
+    writeFiles(validDict, subreddit)
         
-    
-
 main()
             
-
-
-
-
-
-
