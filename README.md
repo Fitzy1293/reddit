@@ -17,8 +17,8 @@ Keep in my mind that everything but the All subs project gets as much as the red
 So what is this repository? 
 It’s really just a jumbled mess of programs I’ve worked on for reddit.
 
-I started using the PRAW to mess around and improve my programming skills, as comp. sci. is not my main educational background.
-I took intro. to comp. sci., intro. to python, and intro. to java  my first year of college, but those classes did not get very in depth. The python and java courses taught almost the exact same material. 
+I started using PRAW to mess around and improve my programming skills, as comp. sci. is not my main educational background.
+I took some introduction comp. sci. classes my freshman year of college, but those classes did not get very in depth. The python and java courses I took taught almost the exact same material. 
 
 I had an internship as a systems engineer dealing with hardware and software requirements for a legacy system.
 We used a relational database - with upper level requirements linked to lower level requirements, which were in turn linked to test steps. Most of the work was to look for inconsistencies, which was done by filtering in excel.
