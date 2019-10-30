@@ -2,128 +2,82 @@ import urllib.request,json, time, os
 from pprint import pprint
 from datetime import datetime
 
-def getComments(user):
-    author = user
-    url = f'https://api.pushshift.io/reddit/search/comment/?author={author}&size=1000'
-    
-    IDs = []
-    ct = 0
-    while True:
-        req = urllib.request.urlopen(url)
-        response =  json.loads(req.read())
-        data = response['data']
 
-        onekIDs = []
-        for i in data:
-            commentDict = ({'ID': i['id'],
-                            'type': 'comment',
-                            'subreddit': i['subreddit'],
-                            'utc': i['created_utc'],
-                            'date': str(datetime.utcfromtimestamp(i['created_utc'])),
-                            'body': i['body']})
-                            
+def getPosts(user):
+    apiUrl = 'https://api.pushshift.io/reddit/search/'
+
+    keyType = {'comment': ('id', 'created_utc', 'subreddit', 'body', 'score', 'full_link', 'url'),
+               'submission': ('id', 'created_utc', 'subreddit', 'selftext', 'score', 'full_link', 'url')}
+    
+    allPosts = {}
+
+    for postType in ['comment', 'submission']:
+
+        before = int(round(time.time()))
+        posts = []
+        ct = 0
+        while True:
+            url = f'{apiUrl}{postType}/?author={user}&size=1000&before={before}'            
+            req = urllib.request.urlopen(url)
+            response =  json.loads(req.read())
+
+            data = response['data']
             
-            if 'permalink' in i.keys():
-                commentDict['link'] = 'https://www.reddit.com' + i['permalink']
+            for i in data:
+                keys = keyType[postType]
+                
+                validKeys = [ apiKey for apiKey in keys if apiKey in i.keys()]
+                
+                postDict = {}
+                for validKey in validKeys:
+                    postDict[validKey] = i[validKey]
+                
+                posts.append(postDict)
+
+                before = postDict['created_utc']
             
-            onekIDs.append(commentDict)
-    
-        IDs.append(onekIDs)
-        if len(onekIDs)==0:
-            break
-        
-        print(url)
-        print(f'Comment list #{ct+1}, containing info on {len(onekIDs)} comments is complete.')
-        print()
-        
-        newBefore = onekIDs[-1]['utc']
-        url = f'https://api.pushshift.io/reddit/search/comment/?author={author}&size=1000&before={newBefore}'
-        ct = ct+1
+            print(f'{postType} list #{ct+1}, containing info on {len(data)} submissions is complete.')
+            print()
 
-    postDict = [ID for IDSet in IDs for ID in IDSet]
-    postDict.reverse()    
-    
-    return postDict
-
-def getSubmissions(user):
-    author = user
-    url = f'https://api.pushshift.io/reddit/search/submission/?author={author}&size=1000'
-    
-    IDs = []
-    ct = 0
-    while True:
-        req = urllib.request.urlopen(url)
-        response =  json.loads(req.read())
-        data = response['data']
-
-        onekIDs = []
-        for i in data:
-            submissionDict = ({'ID': i['id'],
-                               'type': 'submission',
-                               
-                               'utc': i['created_utc'],
-                               'date': str(datetime.utcfromtimestamp(i['created_utc']))})
             
-            if 'permalink' in i.keys():
-                submissionDict['link'] = 'https://www.reddit.com' + i['permalink']
-            if 'subreddit' in i.keys():
-                submissionDict['subreddit'] = i['subreddit']
+            ct = ct+1
+            
+            if len(data)<1000:
+                allPosts[postType] = posts
+                break
+                
+    return allPosts
 
-            onekIDs.append(submissionDict)
+def countPosts(allPosts):
     
-        IDs.append(onekIDs)
-
-        if len(onekIDs)==0:
-            break
-        
-        print(url)
-        print(f'Submission list #{ct+1}, containing info on {len(onekIDs)} submissions is complete.')
-        print()
-        
-        newBefore = onekIDs[-1]['utc']
-        url = f'https://api.pushshift.io/reddit/search/submission/?author={author}&size=1000&before={newBefore}'
-        ct = ct+1
-
-    postDict = [ID for IDSet in IDs for ID in IDSet]
-    postDict.reverse()    
-    
-    return postDict
 
 def writeFiles(postDict, user):
     if len(postDict)!=0:
-        earliestPost = postDict[-1]['utc']
-        latestPost = postDict[0]['utc']
+        dateTime = time.strftime("%Y%m%d-%H.%M.%S")
 
-        jname = f'{user}_posts.json'
+        jname = f'{user}_{dateTime}.json'
         with open(jname, 'w+') as f:
-            json.dump(postDict, f, indent=4, sort_keys=True)
-
-        print(f'{len(postDict)} IDs retrieved.')
-
+            json.dump(postDict, f, indent=4)        
+      
 def main():
-    users = input('Enter the path of a line separated .txt containing reddit usernames >> ')
-    users = open(users, 'r').read().splitlines()
-    #users = open('random users.txt', 'r').read().splitlines()
+    #users = input('Enter the path of a line separated .txt containing reddit usernames >> ')
+    #users = open(users, 'r').read().splitlines()
+    users = open('myUsers.txt', 'r').read().splitlines()
+
     
     for user in users:
-        start = time.time()
-        try:
-            print('\nGathering comments by ' + user + '.\n')
-            comments = getComments(user)
-            
-            print('\nGathering submissions by '+ user + '\n.')
-            submissions = getSubmissions(user)
-
-            postDic = submissions + comments
-      
-            writeFiles(postDic, user)
-            end = time.time()
-            print(f'\n{end-start} seconds to run.')
-
-        except:
+        if user=='automoderator':
             continue
+        start = time.time()
         
-main()
+        print('\nGathering posts by ' + user + '.\n')
+        
             
-
-
+        postDic = getSubmissions('markw3456')
+        
+        writeFiles(postDic, user)
+        end = time.time()
+        print(f'\n{end-start} seconds to run.')
+  
+main()
+      
