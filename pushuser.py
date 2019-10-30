@@ -32,7 +32,8 @@ def getPosts(user):
 
                 posts.append(postDict)
 
-            before = posts[-1]['created_utc']
+            if len(posts)!=0:
+                before = posts[-1]['created_utc']
 
             capitalPost = postType[0].capitalize() + postType[1:]
             log = f'{" " * 4}- {capitalPost} request #{ct+1}, for {len(data)} {postType}(s) completed.'
