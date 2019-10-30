@@ -24,9 +24,7 @@ def getPosts(user):
             data = response['data']
             
             for i in data:
-                keys = keyType[postType]
-                
-                validKeys = [ apiKey for apiKey in keys if apiKey in i.keys()]
+                validKeys = [ apiKey for apiKey in keyType[postType] if apiKey in i.keys()]
                 
                 postDict = {}
                 for validKey in validKeys:
@@ -37,19 +35,18 @@ def getPosts(user):
                 before = postDict['created_utc']
             
             print(f'{postType} list #{ct+1}, containing info on {len(data)} submissions is complete.')
-            print()
-
             
             ct = ct+1
             
             if len(data)<1000:
                 allPosts[postType] = posts
                 break
+        print()
                 
     return allPosts
 
 def countPosts(allPosts):
-    
+    print()
 
 def writeFiles(postDict, user):
     if len(postDict)!=0:
@@ -63,7 +60,7 @@ def main():
     #users = input('Enter the path of a line separated .txt containing reddit usernames >> ')
     #users = open(users, 'r').read().splitlines()
     users = open('myUsers.txt', 'r').read().splitlines()
-
+    
     
     for user in users:
         if user=='automoderator':
@@ -78,6 +75,11 @@ def main():
         writeFiles(postDic, user)
         end = time.time()
         print(f'\n{end-start} seconds to run.')
-  
+
+       
+        
+        
 main()
       
+
+
