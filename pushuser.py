@@ -8,7 +8,6 @@ def getPosts(user):
     keyType = {'comment': ('id', 'created_utc', 'subreddit', 'body', 'score', 'permalink'),
                'submission': ('id', 'created_utc', 'subreddit', 'selftext', 'score', 'full_link', 'url')}
     
-    
     allPosts = {}
     for postType in ['comment', 'submission']:
         before = int(round(time.time()))
@@ -51,13 +50,11 @@ def getPosts(user):
             emptyLink = i['permalink']
             i['permalink'] = 'https://www.reddit.com' + emptyLink #Strange how this is different between comments and submissions.
     
-   
     return allPosts
 
 def countPosts(allPosts):
     postCounts = {}
     for postType, posts in allPosts.items():
-
         subreddits = [post['subreddit'] for post in posts]
         subredditSet = set(subreddits)
 
@@ -81,7 +78,6 @@ def writeFiles(allPosts, postCounts, user):
     if not os.path.exists(userDir):
         os.mkdir(userDir)
     
-    
     if len(allPosts)!=0:
         newUtc = int(round(time.time()))
 
@@ -90,7 +86,6 @@ def writeFiles(allPosts, postCounts, user):
         with open(jPath, 'w+') as f:
             json.dump(allPosts, f, indent=6)
 
-
         cFname = f'{user}_{newUtc} subreddit_count.json'
         cPath = os.path.join(userDir, cFname) 
         with open(cPath, 'w+') as g:
@@ -98,10 +93,9 @@ def writeFiles(allPosts, postCounts, user):
 
         for fname in os.listdir(userDir):
             oldFname = os.path.join(userDir, fname)
-            #if oldFname not in (jPath, cPath):
-        
-            #os.remove(fullPath)
-      
+            if oldFname not in (jPath, cPath):
+                os.remove(oldFname)
+    
 def main():
     userIn = input('Enter a subreddit or the path of a line separated .txt containing reddit usernames >> ')
     print()
