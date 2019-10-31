@@ -23,8 +23,10 @@ while True:
                 text = submission['selftext'].replace('&amp;#x200B;', '')
             else:
                 text = submission['selftext']
+
+            text = text.strip()
             
-                
+            
             posts.append((submission['title'], text))
             ct = ct + 1
             
@@ -43,4 +45,5 @@ for post in posts:
 f.close()
 
 os.startfile(fname)
-'
+
+
