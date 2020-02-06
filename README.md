@@ -55,11 +55,11 @@ I started to use a module I made that has one function that returns all of my re
 ```
 import praw
 def authenticate():
-reddit = praw.Reddit(client_id='YOUR CLIENT ID',
-client_secret='YOUR CLIENT SECRET',
-user_agent='URL OF YOUR SCRIPT',
-username='/u/YOU')
-return reddit
+  reddit = praw.Reddit(client_id='YOUR CLIENT ID',
+  client_secret='YOUR CLIENT SECRET',
+  user_agent='URL OF YOUR SCRIPT',
+  username='/u/YOU')
+  return reddit
 ```
 
 You must keep the API info secret or you can get banned from using it. 
