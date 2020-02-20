@@ -9,7 +9,7 @@ from datetime import datetime
 #Returns # of comments by user as a list of (subreddit, comment count).
 def userCommentCount(user):
     userComments = [str(comment.subreddit) for comment in user.comments.new(limit=None)]
-    
+
     subredditCounts = {}
     for subreddit in set(userComments):
         subredditCounts[subreddit] = userComments.count(subreddit)
@@ -19,7 +19,7 @@ def userCommentCount(user):
 #Returns number of submissions by user as a list of (subreddit, submission count).
 def userSubmissionCount(user):
     userSubmissions = [str(submission.subreddit) for submission in user.submissions.new(limit=None)]
-    
+
     subredditCounts = {}
     for subreddit in set(userSubmissions):
         subredditCounts[subreddit] = userSubmissions.count(subreddit)
@@ -33,19 +33,19 @@ def subredditComments(user, userSubreddit):
         if comment.subreddit == userSubreddit:
             postTime = str(datetime.utcfromtimestamp(comment.created))
             permalink = 'https:/www.reddit.com' + str(comment.permalink)
-            
-            #Needed to deal with emojis without just excepting the whole comment. 
+
+            #Needed to deal with emojis without just excepting the whole comment.
             comment = str(comment.body.encode('utf-8'))
             comment = comment.lstrip('\"b')
             comment = comment.lstrip('\'b')
-            comment = comment.rstrip('\"')  
+            comment = comment.rstrip('\"')
             comment = comment.rstrip('\'')
             comment = '\n\n'.join(comment.split('\\n\\n'))
             comment = ''.join(comment.split('\\n'))
             comment = '\''.join(comment.split('\\\''))
 
             comments.insert(0, (postTime, permalink, comment))
-    
+
     return comments
 
 def subredditSubmissions(user, userSubreddit):
@@ -54,28 +54,28 @@ def subredditSubmissions(user, userSubreddit):
         if submission.subreddit == userSubreddit:
             submissions.insert(0, (str(datetime.utcfromtimestamp(submission.created)),
                               'https:/www.reddit.com' + str(submission.permalink)))
-            
+
     return submissions
 
 def formatCount(commentCounts, submissionCounts):
     largest = max(len(commentCounts), len(submissionCounts))
 
     commentSubmissions = []
-    commentLengths = [] #For formatting. 
+    commentLengths = [] #For formatting.
     for i in range(largest):
         commentSubmission = []
-        
+
         if i < len(commentCounts):
             commentCount = 'r/' + commentCounts[i][0] + ': ' + str(commentCounts[i][1]) + ' comment(s)'
             commentSubmission.append(commentCount)
             commentLengths.append(len(commentCount))
-            
+
         if i < len(submissionCounts):
             submissionCount = 'r/' + submissionCounts[i][0] + ': ' + str(submissionCounts[i][1]) + ' submission(s)'
             commentSubmission.append(submissionCount)
 
         commentSubmissions.append(commentSubmission)
-            
+
     for i, pair in enumerate(commentSubmissions):
         if i==0:
             print('- Comments -' + ' ' * (max(commentLengths) - len('- Comments -')) + ' ' * 20 + '- Submissions -\n')
@@ -85,16 +85,16 @@ def formatCount(commentCounts, submissionCounts):
             print(pair[0])
         else:
             print(' ' * max(commentLengths)  + ' ' * 20 + pair[0])
-        
-#Creates .txt export. 
+
+#Creates .txt export.
 def txtExport(filename, comments, submissions):
     txt = open(filename + '.','w', encoding = 'utf8')
-    
+
     if len(comments)!=0:
         txt.write('- Comments - \n\n')
         for i, comment in enumerate(comments):
             txt.write('Comment #' + str(i+1) + '\n')
-            txt.write(comment[0] + '\n')                    
+            txt.write(comment[0] + '\n')
             txt.write(comment[1] + '\n\n')
             txt.write(comment[2] + '\n\n')
 
@@ -104,31 +104,33 @@ def txtExport(filename, comments, submissions):
             txt.write('Submission #' + str(i+1) + '\n')
             txt.write(submission[0] + '\n')
             txt.write(submission[1] + '\n\n')
-    
+
     txt.close()
 
 def main():
     reddit = authenticate()
     user = reddit.redditor(input('Enter a username u/'))
-    
+    print()
+
     commentCounts = userCommentCount(user)
     submissionCounts = userSubmissionCount(user)
 
     formatCount(commentCounts, submissionCounts)
 
     userSubreddit = input('\nEnter a subreddit r/')
+    print()
 
     comments = subredditComments(user, userSubreddit)
     submissions = subredditSubmissions(user, userSubreddit)
 
-    if len(comments) + len(submissions) != 0: #If they've actually submitted to that sub. 
+    if len(comments) + len(submissions) != 0: #If they've actually submitted to that sub.
         txtExport(str(user) + '_' + str(userSubreddit) + '.txt', comments, submissions)
         exportPath = os.path.join(os.getcwd(), str(user) + '_' + str(userSubreddit) + '.txt')
         print(exportPath)
         os.startfile(exportPath, 'open')
 
     else:
-        print('\n' + str(user) + ' has not submitted to ' + str(userSubreddit) + ' in their last 1k posts.')
+        print(str(user) + ' has not submitted to ' + str(userSubreddit) + ' in their last 1k posts.')
 
 while True:
     main()
